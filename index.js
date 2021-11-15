@@ -65,6 +65,14 @@ async function run() {
           const cursor = await orders.deleteOne(query);
           res.json(cursor);
       })
+      app.put('/myorders', async(req, res) => {
+          const id = req.query.search;
+          const data = req.body.status;
+          const query = {_id: ObjectId(id)};
+          const doc = {$set: {status: data}};
+          const cursor = await orders.updateOne(query, doc);
+          res.json(cursor);
+      })
 
       app.post('/order/:id', async(req, res) => {
           const user = req.body;
